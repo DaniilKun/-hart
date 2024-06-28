@@ -24,6 +24,9 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
+  /* width: 100vw;
+  height: 100vh;
+  overflow: hidden; */
 	line-height: 1;
   background-color: #1C2B4B;
         color: white

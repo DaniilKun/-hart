@@ -17,7 +17,10 @@ function App() {
 
         <Box display="flex" alignItems="center" sx={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#1C2B4B',
         color: 'white' }}>
+          <div style={{height:'80vh', width:'70vw'}}>
+
           <Chart />
+          </div>
         </Box>
         <RightInfo/>
       </Box>
