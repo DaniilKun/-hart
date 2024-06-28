@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, List, ListItem, ListItemText } from '@mui/material';
 
 const LeftMenu = () => {
