@@ -4,12 +4,13 @@ const LeftMenu = () => {
   return (
     <Box
       sx={{
-        width: 150,
-        padding: 2,
+        maxWidth: 150,
+        // padding: 1,
         borderRight: '1px solid grey',
-        height: '100vh',backgroundColor: '#0B1A38' ,
+backgroundColor: '#0B1A38' ,
         color:'#A8A8A8',
         border:'1px solid #A8A8A8',
+        textAlign:'center',
         borderLeft:'none',
         borderTop:'none'
       }}
@@ -20,10 +21,10 @@ const LeftMenu = () => {
           <ListItemText primary="МОЕ ПОРТФОЛИО" sx={{textAlign:'center'}}/>
         </ListItem>
         <ListItem >
-          <ListItemText primary="ИСТОРИЯ ТОРГОВЛИ" />
+          <ListItemText primary="ИСТОРИЯ ТОРГОВЛИ" sx={{textAlign:'center'}}/>
         </ListItem>
         <ListItem >
-          <ListItemText primary="ТАБЛИЦА ЛИДЕРОВ" />
+          <ListItemText primary="ТАБЛИЦА ЛИДЕРОВ" sx={{textAlign:'center'}}/>
         </ListItem>
       </List>
     </Box>

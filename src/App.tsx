@@ -2,27 +2,39 @@ import Chart from './components/Chart';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Header from './components/Header';
-import RightInfo from './components/RightInfo';
+// import RightInfo from './components/RightInfo';
 import LeftMenu from './components/LeftMenu';
-
+import mmFon from './assets/mmFon.png';
 
 function App() {
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
       <CssBaseline />
       <Header />
 
       <Box sx={{ display: 'flex', flex: 1 }}>
-<LeftMenu/>
+        <LeftMenu />
 
-        <Box display="flex" alignItems="center" sx={{ flex: 1, display: 'flex', flexDirection: 'column', backgroundColor: '#1C2B4B',
-        color: 'white' }}>
-          <div style={{height:'80vh', width:'70vw'}}>
-
-          <Chart />
+        <Box
+          display="flex"
+          alignItems="center"
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: '#1C2B4B',
+            backgroundImage: `url(${mmFon})`,
+            backgroundSize: 'contained',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            color: 'white',
+          }}>
+          <div style={{ height: '80vh', width: '70vw' }}>
+            <Chart />
           </div>
         </Box>
-        <RightInfo/>
+        {/* <RightInfo /> */}
       </Box>
     </Box>
   );

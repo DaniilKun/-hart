@@ -1,8 +1,13 @@
 import { AppBar, Toolbar, Typography, Box, Tabs, Tab, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import logo from '../assets/logo.png'
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 const Header = () => {
+  const balance = useSelector((state: RootState) => state.currentBalance.balance);
+
+
   return (
         <AppBar position="static" style={{ backgroundColor: '#0B1A38',borderBottom:'1px solid #A8A8A8', }}>
       <Toolbar>
@@ -17,7 +22,7 @@ const Header = () => {
           </IconButton>
           </Tabs>
           <Typography variant="h6" style={{ marginLeft: '16px', color: 'green' }}>
-            ₽115.22
+            ₽{balance}
           </Typography>
         </Box>
       </Toolbar>
