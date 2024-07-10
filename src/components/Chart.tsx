@@ -13,39 +13,20 @@ function getRandomNumber(min = 1000, max = 8000) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const Colorswitch = () => {
-    const { top, height, bottom } = useDrawingArea();
-    const svgHeight = top + bottom + height;
-    return (
-        <>
-            <defs>
-                <linearGradient id="paint0_linear_45_2" x1="300.25" y1="46.9999" x2="300.25" y2={`${svgHeight}px`}
-                    gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#BCBCBC" stopOpacity="0.4" />
-                    <stop offset="1" stopColor="#BCBCBC" stopOpacity="0" />
-                </linearGradient>
-            </defs>
-        </>
-    );
-}
-
 const BlinkingCircle = ({ x, y }) => {
     return (
         <circle cx={x} cy={y} r={8} fill="red" stroke="white" strokeWidth={2} className="blinking" />
     );
 };
 
+const getCurrentTime = () => {
+    const now = new Date();
+    return now.toLocaleTimeString();
+};
+
 export default function Chart() {
-    const uData = useRef([4000, 3000, 2000, 2780, 1890, 2390, 3490]);
-    const xLabels = useRef([
-        'Page A',
-        'Page B',
-        'Page C',
-        'Page D',
-        'Page E',
-        'Page F',
-        'Page G',
-    ]);
+    const uData = useRef([4000, ]);
+    const xLabels = useRef(Array(1).fill(getCurrentTime()));
     const [renderCounter, setRenderCounter] = useState(0);
     const [previousValue, setPreviousValue] = useState(uData.current[uData.current.length - 1]);
     const [bets, setBets] = useState([]);
@@ -63,7 +44,7 @@ export default function Chart() {
         const intervalId = setInterval(() => {
             const tempData = [...uData.current];
             const tempAxis = [...xLabels.current];
-            tempAxis.push(`Page G${renderCounter}`);
+            tempAxis.push(getCurrentTime());
             tempData.push(getRandomNumber());
             uData.current = tempData;
             xLabels.current = tempAxis;
@@ -99,7 +80,6 @@ export default function Chart() {
                 series={[
                     {
                         data: uData.current,
-                        area: true,
                     }
                 ]}
                 grid={{ horizontal: true, vertical: true }}
@@ -119,6 +99,7 @@ export default function Chart() {
                     },
                 ]}
                 sx={{
+                    backgroundColor: 'transparent', // Добавлено для прозрачного фона
                     '& .MuiLineChart-root .MuiAxis-root text': {
                         fill: 'white',
                     },
@@ -127,12 +108,6 @@ export default function Chart() {
                     },
                     '& .MuiLineChart-root .MuiAxis-root .MuiAxis-line': {
                         stroke: 'white',
-                    },
-                    '& .css-j6h5qe-MuiAreaElement-root': {
-                        fill: 'url(#paint0_linear_45_2)',
-                    },
-                    '& .css-tvglr0-MuiAreaElement-root': {
-                        fill: 'url(#paint0_linear_45_3)',
                     },
                     '& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
                         fill: '#fff',
@@ -148,7 +123,7 @@ export default function Chart() {
                     },
                     '& .MuiChartsGrid-line': {
                         stroke: '#fff',
-                        opacity: '0.4',
+                        opacity: '0.2',
                     },
                     '@keyframes blink-animation': {
                         '0%': { opacity: 1 },
@@ -160,7 +135,6 @@ export default function Chart() {
                     },
                 }}
             >
-                <Colorswitch />
                 <svg width="100%" height="100%" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}>
                     <BlinkingCircle x="95%" y={yPosition} />
                 </svg>

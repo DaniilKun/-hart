@@ -15,14 +15,14 @@ const Header = () => {
           <img src={logo} alt="logo" style={{ width: '195px', marginRight: '16px' }} />
           <Tabs value={0} textColor="inherit" TabIndicatorProps={{ style: { backgroundColor: 'white' } }}>
             <Tab label="USD/BRL" />
-            <Tab label="EUR/USD" />
-            <Tab label="EUR/JPY" />
-          <IconButton edge="end" color="inherit" aria-label="add" style={{ marginLeft: 'auto' }}>
+            {/* <Tab label="EUR/USD" />
+            <Tab label="EUR/JPY" /> */}
+          {/* <IconButton edge="end" color="inherit" aria-label="add" style={{ marginLeft: 'auto' }}>
             <AddIcon />
-          </IconButton>
+          </IconButton> */}
           </Tabs>
           <Typography variant="h6" style={{ marginLeft: '16px', color: 'green' }}>
-            ₽{balance}
+            Баланс: {balance}
           </Typography>
         </Box>
       </Toolbar>
