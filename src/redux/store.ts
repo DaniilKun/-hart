@@ -1,10 +1,12 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import currentBalanceReducer from './currentWallet/currentBalanceSlice'; // Импортируем правильный редюсер
+import betHistoryReducer from './betHistory/betHistorySlice';
 
 export const store = configureStore({
   reducer: {
     currentBalance: currentBalanceReducer, // Обозначаем редюсер с правильным именем
+    betHistory: betHistoryReducer,
   },
 });
 

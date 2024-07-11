@@ -7,6 +7,7 @@ import { Box } from '@mui/material';
 import { decreaseBalance, increaseBalance } from '../redux/currentWallet/currentBalanceSlice';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { addBet } from '../redux/betHistory/betHistorySlice';
 
 function getRandomNumber(min = 1000, max = 8000) {
   if (min > max) {
@@ -63,33 +64,48 @@ export default function Chart() {
       tempData.push(getRandomNumber());
       uData.current = tempData;
       xLabels.current = tempAxis;
-
+  
       // Проверка результатов ставок
       bets.forEach((bet) => {
         const currentValue = uData.current[uData.current.length - 1];
+        let result = 0; // 0 - проигрыш, 1 - выигрыш
+  
         if (
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment
+      //@ts-ignore
           (bet.direction === 'up' && currentValue > bet.previousValue) ||
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment
+      //@ts-ignore
           (bet.direction === 'down' && currentValue < bet.previousValue)
         ) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-expect-error
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment
+      //@ts-ignore
           dispatch(increaseBalance(bet.amount)); // выигрыш
+          result = 1;
         } else {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          //@ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment
+      //@ts-ignore
           dispatch(decreaseBalance(bet.amount)); // проигрыш
         }
+  
+        // Отправка ставки в историю
+        dispatch(addBet({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+          amount: bet.amount,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+          direction: bet.direction,
+          result,
+          timestamp: getCurrentTime(),
+        }));
       });
-
+  
       // Очистка обработанных ставок и установка статуса завершения
       setBets([]);
-      setBetStatus('completed'); // Устанавливаем статус завершения ставки
+      setBetStatus('completed');
       setRenderCounter(renderCounter + 1);
-      setUpdates(updates + 1); // Увеличиваем счетчик обновлений
+      setUpdates(updates + 1);
     }, 3000);
     return () => clearInterval(intervalId);
   }, [renderCounter, bets, dispatch]);
@@ -116,11 +132,8 @@ export default function Chart() {
   const xPosition = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const valuesChart = (chartRef.current as any)?.getElementsByTagName('g')[1];
-    console.log(valuesChart);
-
     if (valuesChart) {
       const valuesRects = valuesChart.getBoundingClientRect();
-      console.log('valuesRects', valuesRects.width);
 
       return valuesRects.width + 50;
     }

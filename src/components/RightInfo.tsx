@@ -4,37 +4,48 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { RootState } from '../redux/store';
+import { useSelector } from 'react-redux';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const RightInfo = ({ onBet, betStatus }:{onBet:any, betStatus: any}) => {
+  const balance = useSelector((state: RootState) => state.currentBalance.balance);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(426));
-  const [amount, setAmount] = useState('50'); // Убираем символ рубля для удобства
-  const [betInProgress, setBetInProgress] = useState(false); // Добавляем состояние для отслеживания состояния ставки
+  const [amount, setAmount] = useState('50');
+  const [betInProgress, setBetInProgress] = useState(false);
+  const [previousBalance, setPreviousBalance] = useState(balance);
+  const [profit, setProfit] = useState<number | null>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: { target: { value: any; }; }) => {
     const newValue = event.target.value;
-    // Проверяем, что введено только число
     if (/^\d*$/.test(newValue)) {
       setAmount(newValue);
-      console.log(newValue);
     }
   };
 
   const handleBet = (direction: string) => {
-    if (!betInProgress) { // Проверяем, был ли уже клик
-      setBetInProgress(true); // Устанавливаем состояние, что ставка в процессе
+    if (!betInProgress) {
+      setBetInProgress(true);
       const betAmount = parseInt(amount, 10);
       onBet(betAmount, direction);
     }
   };
 
   useEffect(() => {
-    if (betStatus === 'completed') { // Проверяем статус ставки
-      setBetInProgress(false); // Сбрасываем состояние после выполнения ставки
+    if (betStatus === 'completed') {
+      setBetInProgress(false);
     }
   }, [betStatus]);
+
+  useEffect(() => {
+    if (balance !== previousBalance) {
+      const balanceDifference = balance - previousBalance;
+      setProfit(balanceDifference);
+      setPreviousBalance(balance);
+    }
+  }, [balance, previousBalance]);
 
   return (
     <Box
@@ -45,7 +56,7 @@ const RightInfo = ({ onBet, betStatus }:{onBet:any, betStatus: any}) => {
         color: 'white'
       }}
     >
-      <Typography variant="h6" sx={{ color: '#AAA',fontSize: '0.9rem' }}>Экспирация:</Typography>
+      <Typography variant="h6" sx={{ color: '#AAA', fontSize: '0.9rem' }}>Экспирация:</Typography>
       <Typography variant="body1">3 сек.</Typography>
 
       <Typography variant="h6" sx={{ color: '#AAA', marginTop: 2, fontSize: '0.9rem' }}>Сумма:</Typography>
@@ -57,12 +68,15 @@ const RightInfo = ({ onBet, betStatus }:{onBet:any, betStatus: any}) => {
         fullWidth
         sx={{ mb: 2, backgroundColor: 'white', borderRadius: 1 }}
         inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-        disabled={betInProgress} // Деактивируем поле ввода, если ставка в процессе
+        disabled={betInProgress}
       />
 
-      <Typography variant="h6" sx={{ color: '#AAA',fontSize: '0.9rem' }}>Доход:</Typography>
-      <Typography variant="body1" color="green">+90%</Typography>
-      <Typography variant="body1" color="green">+₽720</Typography>
+      <Typography variant="h6" sx={{ color: '#AAA', fontSize: '0.9rem' }}>Доход:</Typography>
+      {profit !== null && (
+        <Typography variant="body1" color={profit >= 0 ? 'green' : 'red'}>
+          {profit > 0 ? `+${profit}` : profit}
+        </Typography>
+      )}
 
       <Button
         variant="contained"
@@ -71,7 +85,7 @@ const RightInfo = ({ onBet, betStatus }:{onBet:any, betStatus: any}) => {
         sx={{ mt: 2, backgroundColor: '#00C853' }}
         startIcon={<ArrowUpwardIcon />}
         onClick={() => handleBet('up')}
-        disabled={betInProgress} // Деактивируем кнопку, если ставка в процессе
+        disabled={betInProgress}
       >
         ВЫШЕ
       </Button>
@@ -82,7 +96,7 @@ const RightInfo = ({ onBet, betStatus }:{onBet:any, betStatus: any}) => {
         sx={{ mt: 1, backgroundColor: '#D32F2F' }}
         startIcon={<ArrowDownwardIcon />}
         onClick={() => handleBet('down')}
-        disabled={betInProgress} // Деактивируем кнопку, если ставка в процессе
+        disabled={betInProgress}
       >
         НИЖЕ
       </Button>
