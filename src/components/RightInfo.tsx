@@ -3,11 +3,13 @@ import { Box, Button, Typography, TextField } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
-const RightInfo = ({ onBet, betStatus }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const RightInfo = ({ onBet, betStatus }:{onBet:any, betStatus: any}) => {
   const [amount, setAmount] = useState('50'); // Убираем символ рубля для удобства
   const [betInProgress, setBetInProgress] = useState(false); // Добавляем состояние для отслеживания состояния ставки
 
-  const handleChange = (event) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (event: { target: { value: any; }; }) => {
     const newValue = event.target.value;
     // Проверяем, что введено только число
     if (/^\d*$/.test(newValue)) {
@@ -16,7 +18,7 @@ const RightInfo = ({ onBet, betStatus }) => {
     }
   };
 
-  const handleBet = (direction) => {
+  const handleBet = (direction: string) => {
     if (!betInProgress) { // Проверяем, был ли уже клик
       setBetInProgress(true); // Устанавливаем состояние, что ставка в процессе
       const betAmount = parseInt(amount, 10);
