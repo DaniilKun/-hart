@@ -108,7 +108,7 @@ export default function Chart() {
     if (valuesChart) {
       const valuesRects = valuesChart.getBoundingClientRect();
       const percent = 1 - lastDataValue / (8000 - 1000);
-      return 135 + valuesRects.height * percent;
+      return (isSmallScreen?107:136) + valuesRects.height * percent
     }
     return 0;
   }, [height, lastDataValue, top]);

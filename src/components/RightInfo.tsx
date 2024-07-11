@@ -45,10 +45,10 @@ const RightInfo = ({ onBet, betStatus }:{onBet:any, betStatus: any}) => {
         color: 'white'
       }}
     >
-      <Typography variant="h6" sx={{ color: '#AAA',fontSize: '0.9rem' }}>Экспирация</Typography>
+      <Typography variant="h6" sx={{ color: '#AAA',fontSize: '0.9rem' }}>Экспирация:</Typography>
       <Typography variant="body1">3 сек.</Typography>
 
-      <Typography variant="h6" sx={{ color: '#AAA', marginTop: 2, fontSize: '0.9rem' }}>Сумма</Typography>
+      <Typography variant="h6" sx={{ color: '#AAA', marginTop: 2, fontSize: '0.9rem' }}>Сумма:</Typography>
       <TextField
         variant="outlined"
         size="small"
@@ -60,7 +60,7 @@ const RightInfo = ({ onBet, betStatus }:{onBet:any, betStatus: any}) => {
         disabled={betInProgress} // Деактивируем поле ввода, если ставка в процессе
       />
 
-      <Typography variant="h6" sx={{ color: '#AAA',fontSize: '0.9rem' }}>Доход</Typography>
+      <Typography variant="h6" sx={{ color: '#AAA',fontSize: '0.9rem' }}>Доход:</Typography>
       <Typography variant="body1" color="green">+90%</Typography>
       <Typography variant="body1" color="green">+₽720</Typography>
 
