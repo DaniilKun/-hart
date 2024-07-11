@@ -5,19 +5,22 @@ import { useTheme } from '@mui/material/styles';
 const LeftMenu = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(426));
+  
+  const listItemTextStyle = {
+    textAlign: 'center',
+    '& .MuiTypography-root': {
+      fontSize: isSmallScreen ? '0.8rem' : '1rem',
+    },
+  };
+
   return (
     <Box
       sx={{
-        // width: '100%',
         maxWidth: isSmallScreen ? 'none' : 130,
-        // padding: 1,
         borderRight: '1px solid grey',
         backgroundColor: '#0B1A38',
         color: '#A8A8A8',
-        // border: '1px solid #A8A8A8',
         textAlign: 'center',
-        borderLeft: 'none',
-        borderTop: 'none',
       }}>
       <List
         sx={{
@@ -28,13 +31,13 @@ const LeftMenu = () => {
           textAlign: 'center',
         }}>
         <ListItem>
-          <ListItemText primary="МОЕ ПОРТФОЛИО" sx={{ textAlign: 'center' }} />
+          <ListItemText primary="МОЕ ПОРТФОЛИО" sx={listItemTextStyle} />
         </ListItem>
         <ListItem>
-          <ListItemText primary="ИСТОРИЯ ТОРГОВЛИ" sx={{ textAlign: 'center' }} />
+          <ListItemText primary="ИСТОРИЯ ТОРГОВЛИ" sx={listItemTextStyle} />
         </ListItem>
         <ListItem>
-          <ListItemText primary="ТАБЛИЦА ЛИДЕРОВ" sx={{ textAlign: 'center' }} />
+          <ListItemText primary="ТАБЛИЦА ЛИДЕРОВ" sx={listItemTextStyle} />
         </ListItem>
       </List>
     </Box>

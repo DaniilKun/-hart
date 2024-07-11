@@ -42,7 +42,7 @@ function App() {
           <div
             style={{
               // height: '80vh',
-              width: '93vw',
+              width: '100%',
             }}>
             <Chart />
           </div>

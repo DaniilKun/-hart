@@ -5,6 +5,8 @@ import { useDrawingArea } from '@mui/x-charts/hooks';
 import RightInfo from './RightInfo';
 import { Box } from '@mui/material';
 import { decreaseBalance, increaseBalance } from '../redux/currentWallet/currentBalanceSlice';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 function getRandomNumber(min = 1000, max = 8000) {
   if (min > max) {
@@ -25,6 +27,8 @@ const getCurrentTime = () => {
 };
 
 export default function Chart() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down(426));
   const chartRef = useRef(null);
   const uData = useRef([4000]);
   const xLabels = useRef(Array(1).fill(getCurrentTime()));
@@ -127,7 +131,7 @@ export default function Chart() {
     <Box display="flex">
       <LineChart
         ref={chartRef}
-        height={700}
+        height={isSmallScreen ? 500 : 700}
         colors={['#2F4CDD']}
         series={[
           {
@@ -190,7 +194,7 @@ export default function Chart() {
         }}>
         {updates >= 2 && ( // Отображаем индикатор только после второго обновления
           <svg
-            width="100%"
+            width= "100%"
             height="100%"
             style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}>
             <BlinkingCircle x={xPosition} y={yPosition} />
